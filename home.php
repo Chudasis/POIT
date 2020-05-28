@@ -23,7 +23,7 @@
 
     <style>
         body {
-            background-image: url("body.jpg");
+            background-image: url("Images/body.jpg");
             background-repeat: no-repeat;
             background-position: center;
             background-size: cover;
@@ -107,21 +107,21 @@
                 <div class="row" style="padding-top: 50px;" ;>
                     <div class="col row">
                         <div class="col">
-                            <img src="teplomer.png" alt="Test Image" height="100px" style="float: left;"/>
+                            <img src="Images/teplomer.png" alt="Test Image" height="100px" style="float: left;"/>
                             <h3>20°C</h3>
                             <h6>Teplota</h6>
                         </div>
                     </div>
                     <div class="col row">
                         <div class="col">
-                            <img src="humidity.png" alt="Test Image" height="100px" style="float: left;" />
+                            <img src="Images/humidity.png" alt="Test Image" height="100px" style="float: left;" />
                             <h3>20%</h3>
                             <h6>Vlhkosť</h6>
                         </div>
                     </div>
                     <div class="col row">
                         <div class="col">
-                            <img src="bulb.png" alt="Test Image" height="100px" style="float: left;" />
+                            <img src="Images/bulb.png" alt="Test Image" height="100px" style="float: left;" />
                             <h3>0%</h3>
                             <h6>Svietivosť</h6>
                         </div>
