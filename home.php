@@ -283,14 +283,6 @@ $day5 = get_by_date($conn,$day5_db);
         <p>© 2020 Copyright <b>Filip Chudiak</b></p>
     </div>
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-            setInterval(function () {
-                $('#show').load('home.php');
-            }, 30000);
-        });
-    </script>   
-
 </body>
 
 </html>
