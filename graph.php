@@ -1,5 +1,36 @@
 <?php
 
+$servername = "localhost";
+$username = "root";
+$password = "";
+$db = "MeteoStanica";
+$temperature = 0;
+$humidity = 0;
+$light = 0;
+
+$conn = new mysqli($servername, $username, $password, $db);
+
+if(isset($_POST['dnes'])){
+    $parameter = date("Y-m-d");
+    $sqlD = "DELETE FROM parameter";
+    $conn->query($sqlD);
+    $sqlI = "INSERT INTO parameter (hodnota) VALUES ('$parameter')";
+    $conn->query($sqlI);
+}
+elseif(isset($_POST['vcera'])){
+    $parameter = date("Y-m-d", strtotime( '-1 days'));
+    $sqlD = "DELETE FROM parameter";
+    $conn->query($sqlD);
+    $sqlI = "INSERT INTO parameter (hodnota) VALUES ('$parameter')";
+    $conn->query($sqlI);
+}
+elseif(isset($_POST['3days'])){
+    $parameter = "3days";
+    $sqlD = "DELETE FROM parameter";
+    $conn->query($sqlD);
+    $sqlI = "INSERT INTO parameter (hodnota) VALUES ('$parameter')";
+    $conn->query($sqlI);
+}
 
 ?>
 
@@ -155,6 +186,8 @@
     <div class="footer">
         <p>© 2020 Copyright <b>Filip Chudiak</b></p>
     </div>
+
+    <script src="graph.js"></script>
 
 </body>
 
