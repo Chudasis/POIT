@@ -32,6 +32,30 @@ elseif(isset($_POST['3days'])){
     $conn->query($sqlI);
 }
 
+if(isset($_POST['submit'])){
+    $parameter = $_POST['select'];
+    if ($parameter == ""){
+        echo "<script type='text/javascript'>alert('Nezadali ste žiadny dátum!');</script>";
+    }
+    else {
+        $sql = "SELECT * FROM DATA WHERE TIME LIKE '$parameter%'";
+        $data = [];
+        $result = mysqli_query($conn,$sql);
+        foreach ($result as $row) {
+            $data[] = $row;  
+        }
+        if ($data == []){
+            echo "<script type='text/javascript'>alert('Pre zadaný deň nemáme žiadne záznamy!');</script>";;
+        }
+        else {
+            $sqlD = "DELETE FROM parameter";
+            $conn->query($sqlD);
+            $sqlI = "INSERT INTO parameter (hodnota) VALUES ('$parameter')";
+            $conn->query($sqlI);
+        }
+    }
+};
+
 ?>
 
 <!DOCTYPE html>
