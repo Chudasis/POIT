@@ -1,7 +1,7 @@
 <?php
 
 $page = $_SERVER['PHP_SELF'];
-$sec = "10";
+$sec = "30";
 
 setlocale(LC_ALL, 'sk_SK');
 
@@ -284,5 +284,4 @@ $day5 = get_by_date($conn,$day5_db);
     </div>
 
 </body>
-
 </html>
