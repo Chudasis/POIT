@@ -1,5 +1,39 @@
 <?php
 
+$page = $_SERVER['PHP_SELF'];
+$sec = "10";
+
+setlocale(LC_ALL, 'sk_SK');
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$db = "MeteoStanica";
+$temperature = 0;
+$humidity = 0;
+$light = 0;
+
+$conn = new mysqli($servername, $username, $password, $db);
+
+$actuall = $conn->query("SELECT * FROM DATA ORDER BY TIME DESC LIMIT 1");
+$row_actuall = $actuall->fetch_assoc();
+
+
+
+$today_date = date("d.m.Y");
+$today_day = mb_strtoupper(strftime("%A"));
+
+$yesterday_date = date("d.m.Y", strtotime( '-1 days'));
+$yesterday_day = mb_strtoupper(strftime("%A", strtotime( '-1 days')));
+
+$day3_date = date("d.m.Y", strtotime( '-2 days'));
+$day3_day = mb_strtoupper(strftime("%A", strtotime( '-2 days')));
+
+$day4_date = date("d.m.Y", strtotime( '-3 days'));
+$day4_day = mb_strtoupper(strftime("%A", strtotime( '-3 days')));
+
+$day5_date = date("d.m.Y", strtotime( '-4 days'));
+$day5_day = mb_strtoupper(strftime("%A", strtotime( '-4 days')));
 
 ?>
 
@@ -108,21 +142,21 @@
                     <div class="col row">
                         <div class="col">
                             <img src="Images/teplomer.png" alt="Test Image" height="100px" style="float: left;"/>
-                            <h3>20°C</h3>
+                            <h3><?php echo $row_actuall['temperature']; ?>°C</h3>
                             <h6>Teplota</h6>
                         </div>
                     </div>
                     <div class="col row">
                         <div class="col">
                             <img src="Images/humidity.png" alt="Test Image" height="100px" style="float: left;" />
-                            <h3>20%</h3>
+                            <h3><?php echo $row_actuall['humidity']; ?>%</h3>
                             <h6>Vlhkosť</h6>
                         </div>
                     </div>
                     <div class="col row">
                         <div class="col">
                             <img src="Images/bulb.png" alt="Test Image" height="100px" style="float: left;" />
-                            <h3>0%</h3>
+                            <h3><?php echo $row_actuall['light']; ?>%</h3>
                             <h6>Svietivosť</h6>
                         </div>
                     </div>
@@ -132,19 +166,24 @@
                         <thead>
                             <tr>
                                 <th scope="col">
-
+                                    <?php echo $today_day; ?>
+                                    <p id="th-day"><?php echo $today_date; ?></p>
                                 </th>
                                 <th scope="col">
-
+                                    <?php echo $yesterday_day; ?>
+                                    <p id="th-day"><?php echo $yesterday_date; ?></p>
                                 </th>
                                 <th scope="col">
-
+                                    <?php echo $day3_day; ?>
+                                    <p id="th-day"><?php echo $day3_date; ?></p>
                                 </th>
                                 <th scope="col">
-
+                                    <?php echo $day4_day; ?>    
+                                    <p id="th-day"><?php echo $day4_date; ?></p>
                                 </th>
                                 <th scope="col">
-
+                                    <?php echo $day5_day; ?>
+                                    <p id="th-day"><?php echo $day5_date; ?></p>
                                 </th>
                             </tr>
                         </thead>
