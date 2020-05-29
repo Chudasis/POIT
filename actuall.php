@@ -86,21 +86,21 @@
 </head>
 
 <body>
-    
+ 
     <div class="jumbotron text-center">
         <h3>Meteostanica</h3>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link" id="home-tab" href="home.php" role="tab">Domov</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="profile-tab" href="graph.php" role="tab">Grafy</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link active" id="contact-tab" href="#contact" role="tab" aria-controls="contact"
-                aria-selected="true">Vypis</a>
-        </li>
-    </ul>
+            <li class="nav-item">
+                <a class="nav-link" id="home-tab" href="home.php" role="tab">Domov</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="profile-tab" href="graph.php" role="tab">Grafy</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" id="contact-tab" href="#contact" role="tab" aria-controls="contact"
+                    aria-selected="true">Vypis</a>
+            </li>
+        </ul>
     </div>
 
     <div class="tab-content" id="myTabContent">
@@ -136,7 +136,18 @@
         <p>© 2020 Copyright <b>Filip Chudiak</b></p>
     </div>
 
+    <script src="actuall_graph.js"></script>
 
+    <script type="text/javascript">
+        $('#show').load('data.php');
+        $(document).ready(function() {
+            setInterval(function () {
+                $('#show').load('data.php')
+            }, 1000);
+        });
+
+    </script>
+    
 </body>
 
 </html>

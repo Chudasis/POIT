@@ -18,22 +18,69 @@ $conn = new mysqli($servername, $username, $password, $db);
 $actuall = $conn->query("SELECT * FROM DATA ORDER BY TIME DESC LIMIT 1");
 $row_actuall = $actuall->fetch_assoc();
 
+function get_by_date($conn, $date) 
+{
+    $count = 0;
+    $array = [];
+    $temperature = 0;
+    $humidity = 0;
+    $light = 0;
+    $today_all = $conn->query("SELECT * FROM DATA WHERE TIME LIKE '" .$date . "%'");
+    while ($row = $today_all->fetch_assoc()) {
+        $temperature += $row['temperature'];
+        $humidity += $row['humidity'];
+        $light += $row['light'];
+        $count += 1;
+    }
+    if ($count==0)
+    {
+        $array[0] = '-';
+        $array[1] = '-';
+        $array[2] = '-';
+        $array[3] = '-';
+        $array[4] = '-';
+    }
+    else
+    {
+        $array[0] = round($temperature / $count, 2);
+        $array[1] = round($humidity / $count, 2);
+        $array[2] = round($light / $count, 2);
+    
+        $max = $conn->query("SELECT MAX(TEMPERATURE) as max FROM DATA WHERE TIME LIKE '" .$date . "%'");
+        $row_max = $max->fetch_assoc();
+        $array[3] = $row_max["max"];
+    
+        $min = $conn->query("SELECT MIN(TEMPERATURE) as min FROM DATA WHERE TIME LIKE '" .$date . "%'");
+        $row_min = $min->fetch_assoc();
+        $array[4] = $row_min["min"];
+    }
+    return $array;
+}
 
-
+$today_db = date("Y-m-d");
 $today_date = date("d.m.Y");
 $today_day = mb_strtoupper(strftime("%A"));
+$today = get_by_date($conn,$today_db);
 
+$yesterday_db = date("Y-m-d", strtotime( '-1 days'));
 $yesterday_date = date("d.m.Y", strtotime( '-1 days'));
 $yesterday_day = mb_strtoupper(strftime("%A", strtotime( '-1 days')));
+$yesterday = get_by_date($conn,$yesterday_db);
 
+$day3_db = date("Y-m-d", strtotime( '-2 days'));
 $day3_date = date("d.m.Y", strtotime( '-2 days'));
 $day3_day = mb_strtoupper(strftime("%A", strtotime( '-2 days')));
+$day3 = get_by_date($conn,$day3_db);
 
+$day4_db = date("Y-m-d", strtotime( '-3 days'));
 $day4_date = date("d.m.Y", strtotime( '-3 days'));
 $day4_day = mb_strtoupper(strftime("%A", strtotime( '-3 days')));
+$day4 = get_by_date($conn,$day4_db);
 
+$day5_db = date("Y-m-d", strtotime( '-4 days'));
 $day5_date = date("d.m.Y", strtotime( '-4 days'));
 $day5_day = mb_strtoupper(strftime("%A", strtotime( '-4 days')));
+$day5 = get_by_date($conn,$day5_db);
 
 ?>
 
@@ -54,6 +101,7 @@ $day5_day = mb_strtoupper(strftime("%A", strtotime( '-4 days')));
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://fonts.google.com/specimen/Balsamiq+Sans?subset=latin">
     <script type="text/javascript" charset="utf-8"></script>
+    <meta http-equiv="refresh" content="<?php echo $sec?>;URL='<?php echo $page?>'">
 
     <style>
         body {
@@ -190,34 +238,39 @@ $day5_day = mb_strtoupper(strftime("%A", strtotime( '-4 days')));
                         <tbody>
                             <tr>
                                 <td>
-
+                                    <p><?php echo $today[0]?>°C </p>
+                                    <p id="avg">MAX: <?php echo $today[3]?>°C &nbsp;&nbsp;&nbsp; MIN: <?php echo $today[4]?>°C</p>
                                 </td>
                                 <td>
-
+                                    <p><?php echo $yesterday[0]?>°C </p>
+                                    <p id="avg">MAX: <?php echo $yesterday[3]?>°C&nbsp;&nbsp;&nbsp;MIN: <?php echo $yesterday[4]?>°C</p>
                                 </td>
                                 <td>
-
+                                    <p><?php echo $day3[0]?>°C </p>
+                                    <p id="avg">MAX: <?php echo $day3[3]?>°C&nbsp;&nbsp;&nbsp;MIN: <?php echo $day3[4]?>°C</p>
                                 </td>
                                 <td>
-
+                                    <p><?php echo $day4[0]?>°C </p>
+                                    <p id="avg">MAX: <?php echo $day4[3]?>°C&nbsp;&nbsp;&nbsp;MIN: <?php echo $day4[4]?>°C</p>
                                 </td>
                                 <td>
-
+                                    <p><?php echo $day5[0]?>°C </p>
+                                    <p id="avg">MAX: <?php echo $day5[3]?>°C&nbsp;&nbsp;&nbsp;MIN: <?php echo $day5[4]?>°C</p>
                                 </td>
                             </tr>
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td><?php echo $today[1]; ?>%</td>
+                                <td><?php echo $yesterday[1]; ?>%</td>
+                                <td><?php echo $day3[1]; ?>%</td>
+                                <td><?php echo $day4[1]; ?>%</td>
+                                <td><?php echo $day5[1]; ?>%</td>
                             </tr>
                             <tr>
-                            <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td><?php echo $today[2]; ?>%</td>
+                                <td><?php echo $yesterday[2]; ?>%</td>
+                                <td><?php echo $day3[2]; ?>%</td>
+                                <td><?php echo $day4[2]; ?>%</td>
+                                <td><?php echo $day5[2]; ?>%</td>
                             </tr>
                         </tbody>
                     </table>
@@ -229,6 +282,14 @@ $day5_day = mb_strtoupper(strftime("%A", strtotime( '-4 days')));
     <div class="footer">
         <p>© 2020 Copyright <b>Filip Chudiak</b></p>
     </div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            setInterval(function () {
+                $('#show').load('home.php');
+            }, 30000);
+        });
+    </script>   
 
 </body>
 
