@@ -211,7 +211,7 @@ if(isset($_POST['submit'])){
         <p>© 2020 Copyright <b>Filip Chudiak</b></p>
     </div>
 
-    <script src="graph.js"></script>
+    <script src="graph_data.js"></script>
 
 </body>
 
